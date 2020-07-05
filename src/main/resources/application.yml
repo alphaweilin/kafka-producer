@@ -1,0 +1,20 @@
+server:
+  servlet:
+    context-path: /producer
+  port: 8001
+
+spring:
+  kafka:
+    bootstrap-servers:
+    - 39.108.113.145:9092
+    producer:
+      retries: 0
+      batch-size:
+        16384
+      buffer-memory:
+        33554432
+      key-serializer:
+        org.apache.kafka.common.serialization.StringSerializer
+      value-serializer:
+        org.apache.kafka.common.serialization.StringSerializer
+      acks: 1

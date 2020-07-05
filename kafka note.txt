@@ -1,0 +1,19 @@
+install kafka https://www.jianshu.com/p/e8c29cba9fae
+
+docker run -d --name zookeeper -p 2181:2181 -v /etc/localtime:/etc/localtime wurstmeister/zookeeper
+
+docker run -d --name kafka -p 9092:9092 -e KAFKA_BROKER_ID=0 -e KAFKA_ZOOKEEPER_CONNECT=172.18.57.3:2181/kafka -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://publicIP:9092 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -v /etc/localtime:/etc/localtime wurstmeister/kafka
+
+
+--------------------------------------------------------------------------------------------------------------------------
+docker exec -it kafka /bin/sh
+cd /opt/kafka_2.12-2.5.0/bin
+
+//list topic
+kafka-topics.sh --zookeeper 172.18.57.3:2181/kafka --list
+
+//create topic
+kafka-topics.sh --zookeeper 172.18.57.3:2181/kafka --create --topic topic02 --partitions 2  --replication-factor 1 
+
+//get group describe
+kafka-consumer-groups.sh --bootstrap-server 172.18.57.3:9092 --describe --group group02
